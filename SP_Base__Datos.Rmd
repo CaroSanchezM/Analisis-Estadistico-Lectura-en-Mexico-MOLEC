@@ -1,0 +1,586 @@
+---
+title: "Base datos 1"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+  pdf_document: default
+
+date: "2025-09-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Exploración de la Base de Datos 
+
+```{r}
+M19=read.csv("Datos_molec_2019-1.csv")
+M20=read.csv("Datos_molec_2020-1.csv")
+M21=read.csv("Datos_molec_2021-1.csv")
+M22=read.csv("Datos_molec_2022-1.csv")
+M23=read.csv("Datos_molec_2023-1.csv")
+M24=read.csv("Datos_molec_2024-1.csv")
+str(M19) 
+str(M20)
+str(M21)
+str(M22)
+str(M23)
+str(M24)
+```
+
+#Diccionarios 
+```{r}
+Dcc19=read.csv("Diccionario_molec_2019-1.csv")
+Dcc20=read.csv("Diccionario_molec_2020-1.csv")
+Dcc21=read.csv("Diccionario_molec_2021-1.csv")
+Dcc22=read.csv("Diccionario_molec_2022-1.csv")
+Dcc23=read.csv("Diccionario_molec_2023-1.csv")
+Dcc24=read.csv("Diccionario_molec_2024-1.csv")
+```
+
+#Resumen de las Variables 
+```{r}
+summary(M19)
+summary(M20)
+summary(M21)
+summary(M22)
+summary(M23)
+summary(M23)
+```
+#Selección de las Variables 
+```{r}
+# Cargar el archivo
+datos <- read.csv("Datos_molec_2019-1.csv", fileEncoding = "latin1")
+
+# Filtrar las variables
+variables <- c("p2", "p4", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+               "p8_1", "p8_2", "p9", "p9_5esp", "p24", "p25", "p25_6esp", "p26", "p32", "p32_6esp")
+
+datos_filtrados <- datos[ , variables]
+datos_filtrados[datos_filtrados %in% c(0, 99, 99999)] <- NA
+
+# Guardar el resultado
+write.csv(datos_filtrados, "MOLEC_filtrado.csv", row.names = FALSE)
+
+#2020
+datos <- read.csv("Datos_molec_2020-1.csv", fileEncoding = "latin1")
+variables <- c("p2", "p4", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+               "p8_1", "p8_2", "p9", "p9_5esp", "p24", "p25", "p25_6esp", "p26", "p32", "p32_6esp")
+datos_filtrados <- datos[ , variables]
+datos_filtrados[datos_filtrados %in% c(0, 99, 99999)] <- NA
+write.csv(datos_filtrados, "MOLEC_filtrado_2020.csv", row.names = FALSE)
+
+#2021
+datos <- read.csv("Datos_molec_2021-1.CSV", fileEncoding = "latin1")
+variables <- c("p2", "p4", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+               "p8_1", "p8_2", "p9", "p9_5esp", "p24", "p25", "p25_6esp", "p26", "p32", "p32_6esp")
+datos_filtrados <- datos[ , variables]
+datos_filtrados[datos_filtrados %in% c(0, 99, 99999)] <- NA
+write.csv(datos_filtrados, "MOLEC_filtrado_2021.csv", row.names = FALSE)
+
+#2022
+datos <- read.csv("Datos_molec_2022-1.CSV", fileEncoding = "latin1")
+variables <- c("p2", "p4", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+               "p8_1", "p8_2", "p9", "p9_5esp", "p24", "p25", "p25_6esp", "p26", "p32", "p32_6esp")
+datos_filtrados <- datos[ , variables]
+datos_filtrados[datos_filtrados %in% c(0, 99, 99999)] <- NA
+write.csv(datos_filtrados, "MOLEC_filtrado_2022.csv", row.names = FALSE)
+
+#2023
+datos <- read.csv("Datos_molec_2023-1.CSV", fileEncoding = "latin1")
+variables <- c("p2", "p4", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+               "p8_1", "p8_2", "p9", "p9_5esp", "p24", "p25", "p25_6esp", "p26", "p32", "p32_6esp")
+datos_filtrados <- datos[ , variables]
+datos_filtrados[datos_filtrados %in% c(0, 99, 99999)] <- NA
+write.csv(datos_filtrados, "MOLEC_filtrado_2023.csv", row.names = FALSE)
+
+#2024
+datos <- read.csv("Datos_molec_2024-1.csv", fileEncoding = "latin1")
+variables <- c("p2", "p4", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+               "p8_1", "p8_2", "p9", "p9_5esp", "p24", "p25", "p25_6esp", "p26", "p32", "p32_6esp")
+datos_filtrados <- datos[ , variables]
+datos_filtrados[datos_filtrados %in% c(0, 99, 99999)] <- NA
+write.csv(datos_filtrados, "MOLEC_filtrado_2024.csv", row.names = FALSE)
+
+```
+
+
+```{r}
+# Variables cualitativas
+cualitativas <- c("p2", "p5", "p5_6esp", "p6_1", "p6_2", "p6_3", "p6_4", "p6_5", "p6_6", "p6_6esp",
+                  "p8_1", "p8_2", "p9", "p9_5esp", "p25", "p25_6esp", "p32", "p32_6esp")
+
+# Variables cuantitativas
+cuantitativas <- c("p4", "p24", "p26")
+
+```
+
+```{r}
+# Leer los archivos filtrados 
+M19 <- read.csv("MOLEC_filtrado.csv", fileEncoding = "latin1")
+M20 <- read.csv("MOLEC_filtrado_2020.csv", fileEncoding = "latin1")
+M21 <- read.csv("MOLEC_filtrado_2021.csv", fileEncoding = "latin1")
+M22 <- read.csv("MOLEC_filtrado_2022.csv", fileEncoding = "latin1")
+M23 <- read.csv("MOLEC_filtrado_2023.csv", fileEncoding = "latin1")
+M24 <- read.csv("MOLEC_filtrado_2024.csv", fileEncoding = "latin1")
+
+```
+
+```{r}
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+install.packages("e1071")
+library(e1071)
+```
+
+```{r}
+# Etiquetas legibles para las variables cuantitativas
+var_labels <- c(
+  p4  = "p4 — Nº libros leídos",
+  p24 = "p24 — Frecuencia de lectura digital",
+  p26 = "p26 — Tiempo continuo de lectura"
+)
+
+cuantitativas <- c("p4", "p24", "p26")
+anos <- list("2019"=M19, "2020"=M20, "2021"=M21, "2022"=M22, "2023"=M23, "2024"=M24)
+
+for (nombre_ano in names(anos)) {
+  datos <- anos[[nombre_ano]]
+  cat("\n===== Año:", nombre_ano, "=====\n")
+  
+  for (var in cuantitativas) {
+    nombre_bonito <- ifelse(!is.na(var_labels[var]), var_labels[var], var)
+    cat("\n------------------------------\n")
+    cat("Variable:", nombre_bonito, "\n")
+    
+    if (!var %in% names(datos)) {
+      cat("Variable no encontrada en este conjunto de datos.\n")
+      next
+    }
+    
+    x <- suppressWarnings(as.numeric(as.character(datos[[var]])))
+    
+    if (all(is.na(x))) {
+      cat("Todos los valores son NA. No se puede calcular.\n")
+      next
+    }
+    
+    media <- mean(x, na.rm = TRUE)
+    mediana <- median(x, na.rm = TRUE)
+    rango_medio <- (max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) / 2
+    desviacion <- sd(x, na.rm = TRUE)
+    coef_var <- ifelse(media == 0, NA, desviacion / media)
+    cuartiles <- quantile(x, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+    sesgo <- moments::skewness(x)
+    curtosis <- moments::kurtosis(x)
+    
+    cat("Media:", round(media, 2), "\n")
+    cat("Mediana:", round(mediana, 2), "\n")
+    cat("Rango medio:", round(rango_medio, 2), "\n")
+    cat("Desviación estándar:", round(desviacion, 2), "\n")
+    cat("Coeficiente de variación:", round(coef_var, 2), "\n")
+    cat("Cuartiles:\n"); print(round(cuartiles, 2))
+    cat("Sesgo:", round(sesgo, 2), "\n")
+    cat("Curtosis:", round(curtosis, 2), "\n")
+  }
+}
+
+```
+
+
+
+
+
+
+```{r}
+
+var_labels <- c(
+  p4  = "p4 (N\u00BA libros le\u00EDdos)",
+  p24 = "p24 (Frecuencia de lectura digital)",
+  p26 = "p26 (Tiempo continuo de lectura)"
+)
+
+cuantitativas <- c("p4","p24","p26")
+anos <- list("2019" = M19, "2020" = M20, "2021" = M21, "2022" = M22, "2023" = M23, "2024" = M24)
+
+for (ano_nombre in names(anos)) {
+  df <- anos[[ano_nombre]]
+  vars_present <- intersect(cuantitativas, names(df))
+  if (length(vars_present) < 2) {
+    cat("\n\nAño:", ano_nombre, "- menos de 2 variables cuantitativas disponibles, se omite.\n")
+    next
+  }
+
+  etiquetas <- sapply(vars_present, function(v) if (!is.na(var_labels[v])) var_labels[v] else v)
+  
+  cat("\n\nCorrelaci\u00F3n entre:", paste(etiquetas, collapse = ", "), " — Año:", ano_nombre, "\n")
+  corr <- cor(df[, vars_present], use = "complete.obs")
+  print(round(corr, 3))
+
+  pairs(df[, vars_present],
+        labels = etiquetas,
+        main = paste("Pairs:", paste(etiquetas, collapse = "  |  "), "-", ano_nombre))
+}
+
+```
+
+
+```{r}
+
+library(knitr)
+anos <- list("2019" = M19, "2020" = M20, "2021" = M21, "2022" = M22, "2023" = M23, "2024" = M24)
+
+tabla_frecuencias_anos <- function(var, anos_list) {
+  niveles <- unique(unlist(lapply(anos_list, function(df) { unique(as.character(df[[var]])) })))
+  niveles <- sort(na.omit(niveles))             
+  if (length(niveles) == 0) {
+    return(NULL)
+  }
+  
+  cont_mat <- matrix(0, nrow = length(anos_list), ncol = length(niveles),
+                     dimnames = list(names(anos_list), niveles))
+  prop_mat <- cont_mat
+  
+  for (i in seq_along(anos_list)) {
+    df <- anos_list[[i]]
+    if (!var %in% names(df)) next
+    tab <- table(factor(as.character(df[[var]]), levels = niveles), useNA = "no")
+    cont_mat[i, ] <- as.numeric(tab)
+    n <- sum(tab)
+    if (n > 0) prop_mat[i, ] <- round(as.numeric(tab) / n, 3)
+  }
+  
+  combined <- matrix("", nrow = nrow(cont_mat), ncol = ncol(cont_mat),
+                     dimnames = list(rownames(cont_mat), colnames(cont_mat)))
+  for (r in 1:nrow(cont_mat)) {
+    for (c in 1:ncol(cont_mat)) {
+      combined[r, c] <- paste0(cont_mat[r, c], " (", prop_mat[r, c], ")")
+    }
+  }
+  as.data.frame(combined, stringsAsFactors = FALSE)
+}
+
+#
+for (v in cualitativas) {
+  cat("\n\n========================================\n")
+  cat("Variable cualitativa:", v, "\n\n")
+  tb <- tabla_frecuencias_anos(v, anos)
+  if (is.null(tb)) {
+    cat("No hay datos para esta variable en ningún año.\n")
+    next
+  }
+  cat("Tabla: conteo (proporción)\n")
+  print(kable(tb, format = "markdown", caption = paste("Frecuencias de", v, "por año")))
+}
+
+```
+
+```{r}
+
+colores <- if (exists("colores")) colores else rainbow(6)
+var_labels <- if (exists("var_labels")) var_labels else c(
+  p2 = "p2 (Acostumbra a leer)",
+  p5 = "Motivo lectura",
+  p5_6esp = "Motivo principal de lectura",
+  p6_1 = "Tipo de libros",
+  p6_2 = "p6_2 (Tipo de libros)",
+  p6_3 = "p6_3 (Tipo de libros)",
+  p6_4 = "libros literatura",
+  p6_5 = "p6_5 (Tipo de libros)",
+  p6_6 = "p6_6 (Tipo de libros)",
+  p6_6esp = "p6_6esp (Tipo de libros - otro)",
+  p8_1 = "Formato: digital",
+  p8_2 = "p8_2 (Formato: impreso)",
+  p9 = "p9 (Lugar de lectura)",
+  p9_5esp = "p9_5esp (Lugar - otro)",
+  p25 = "p25 (Motivo lectura digital)",
+  p25_6esp = "p25_6esp (Motivo digital - otro)",
+  p32 = "p32 (Motivo de no lectura)",
+  p32_6esp = "p32_6esp (Motivo no lectura - otro)",
+  p4 = "N\u00BA libros",
+  p24 = "lectura digital redes",
+  p26 = "Tiempo continuo de lectura"
+)
+
+anos <- list("2019" = M19, "2020" = M20, "2021" = M21, "2022" = M22, "2023" = M23, "2024" = M24)
+
+pares <- list(
+  list(cuant = "p4", cual = "p6_4"),   # p4 vs p6_4
+  list(cuant = "p24", cual = "p8_1"),  # p24 vs p8_1
+  list(cuant = "p26", cual = "p5")     # p26 vs p5
+)
+
+for (parcomp in pares) {
+  q <- parcomp$cuant
+  cvar <- parcomp$cual
+  titulo_q <- if (!is.na(var_labels[q])) var_labels[q] else q
+  titulo_c <- if (!is.na(var_labels[cvar])) var_labels[cvar] else cvar
+  
+  cat("\n\n===== Comparación:", titulo_q, "por", titulo_c, "=====\n")
+  par(mfrow = c(2,3), mar = c(4,4,2,1))
+  
+  for (ano in names(anos)) {
+    df <- anos[[ano]]
+    main_title <- paste(titulo_q, "por", titulo_c, ano)
+    
+    if (!(q %in% names(df)) || !(cvar %in% names(df))) {
+      plot.new()
+      title(main_title)
+      text(0.5, 0.5, "Variable no disponible en este año")
+      next
+    }
+    
+    grupo <- factor(df[[cvar]])
+    
+    # Si el grupo tiene más de 12 niveles, mejor mostrar mensaje en vez de boxplot ilegible
+    if (nlevels(grupo) > 12) {
+      plot.new()
+      title(main_title)
+      text(0.5, 0.5, paste("Demasiados niveles:", nlevels(grupo)))
+      next
+    }
+    
+    # Dibujar boxplot 
+    boxplot(df[[q]] ~ grupo,
+            horizontal = TRUE,
+            main = main_title,
+            xlab = titulo_q,
+            col = colores)
+  }
+}
+
+```
+
+```{r}
+# Mapa de nombres 
+var_labels <- c(
+  p2 = "p2 (Acostumbra a leer)",
+  p5 = "Motivo lectura",
+  p5_6esp = "Motivo principal de lectura",
+  p6_1 = "Tipo de libros",
+  p6_2 = "p6_2 (Tipo de libros)",
+  p6_3 = "p6_3 (Tipo de libros)",
+  p6_4 = "libros literatura",
+  p6_5 = "p6_5 (Tipo de libros)",
+  p6_6 = "p6_6 (Tipo de libros)",
+  p6_6esp = "p6_6esp (Tipo de libros - otro)",
+  p8_1 = "Formato: digital",
+  p8_2 = "p8_2 (Formato: impreso)",
+  p9 = "p9 (Lugar de lectura)",
+  p9_5esp = "p9_5esp (Lugar - otro)",
+  p25 = "p25 (Motivo lectura digital)",
+  p25_6esp = "p25_6esp (Motivo digital - otro)",
+  p32 = "p32 (Motivo de no lectura)",
+  p32_6esp = "p32_6esp (Motivo no lectura - otro)",
+  p4 = "N\u00BA libros",
+  p24 = "lectura digital redes",
+  p26 = "Tiempo continuo de lectura"
+)
+
+# Vector de años y data.frames
+anos <- list("2019" = M19, "2020" = M20, "2021" = M21, "2022" = M22, "2023" = M23, "2024" = M24)
+
+# Librería para tablas 
+library(knitr)
+
+# Función que crea tabla combinada conteo (proporción) por año, manteniendo orden de niveles
+tabla_frecuencias_anos <- function(var, anos_list, niveles = NULL, etiquetas_nivel = NULL) {
+  
+  if (is.null(niveles)) {
+    niveles <- unique(unlist(lapply(anos_list, function(df) { unique(as.character(df[[var]])) })))
+    niveles <- sort(na.omit(niveles))
+  }
+  if (length(niveles) == 0) return(NULL)
+  cont_mat <- matrix(0, nrow = length(anos_list), ncol = length(niveles),
+                     dimnames = list(names(anos_list), niveles))
+  prop_mat <- cont_mat
+  for (i in seq_along(anos_list)) {
+    df <- anos_list[[i]]
+    if (!var %in% names(df)) next
+    tab <- table(factor(as.character(df[[var]]), levels = niveles), useNA = "no")
+    cont_mat[i, ] <- as.numeric(tab)
+    n <- sum(tab)
+    if (n > 0) prop_mat[i, ] <- round(as.numeric(tab) / n, 3)
+  }
+  combined <- matrix("", nrow = nrow(cont_mat), ncol = ncol(cont_mat),
+                     dimnames = list(rownames(cont_mat), colnames(cont_mat)))
+  for (r in 1:nrow(cont_mat)) for (c in 1:ncol(cont_mat))
+    combined[r, c] <- paste0(cont_mat[r, c], " (", prop_mat[r, c], ")")
+  
+  if (!is.null(etiquetas_nivel) && length(etiquetas_nivel) == ncol(combined))
+    colnames(combined) <- etiquetas_nivel
+  as.data.frame(combined, stringsAsFactors = FALSE)
+}
+
+# Imprimir tablas para todas las variables cualitativas 
+for (v in c("p2","p5","p5_6esp","p6_1","p6_2","p6_3","p6_4","p6_5","p6_6","p6_6esp",
+            "p8_1","p8_2","p9","p9_5esp","p25","p25_6esp","p32","p32_6esp")) {
+  titulo_var <- ifelse(!is.na(var_labels[v]), var_labels[v], v)
+  cat("\n\n========================================\n")
+  cat("Variable cualitativa:", titulo_var, "\n\n")
+  tb <- tabla_frecuencias_anos(v, anos)
+  if (is.null(tb)) {
+    cat("No hay datos para esta variable en los archivos.\n")
+    next
+  }
+  cat("Tabla: conteo (proporci\u00F3n)\n")
+  print(kable(tb, format = "markdown", caption = paste("Frecuencias de", titulo_var, "por a\u00F1o")))
+}
+
+```
+
+```{r}
+# Creación de Pie
+pie_p8_unico <- function(df, anno_label = "Año", codigo_si = 1,
+                         label_digital = "Digital", label_impreso = "Impreso",
+                         colores = c("darkgreen", "darksalmon")) {
+  # Verificar existencia de variables
+  if (!("p8_1" %in% names(df)) & !("p8_2" %in% names(df))) {
+    stop("Ni p8_1 ni p8_2 existen en el data.frame.")
+  }
+  
+  cnt_digital <- if ("p8_1" %in% names(df)) sum(df$p8_1 == codigo_si, na.rm = TRUE) else 0
+  cnt_impreso <- if ("p8_2" %in% names(df)) sum(df$p8_2 == codigo_si, na.rm = TRUE) else 0
+  
+
+ 
+  
+  valores <- c(cnt_digital, cnt_impreso)
+  nombres <- c(label_digital, label_impreso)
+  
+  # Si ambas cuentas son cero, mostrar mensaje
+  if (sum(valores) == 0) {
+    plot.new()
+    title(paste("No hay datos para", anno_label))
+    text(0.5, 0.5, "No hay observaciones 'sí' en p8_1 o p8_2")
+    return(invisible(NULL))
+  }
+  
+  # Dibujar pie único
+  pie(valores,
+      labels = paste0(nombres, " (", valores, ")"),
+      col = colores,
+      main = paste("Formato de lectura -", anno_label))
+}
+
+
+pie_p8_unico(M19, "2019")
+pie_p8_unico(M20, "2020")
+pie_p8_unico(M21, "2021")
+pie_p8_unico(M22, "2022")
+pie_p8_unico(M23, "2023")
+pie_p8_unico(M24, "2024")
+
+anos <- list("2019" = M19, "2020" = M20, "2021" = M21, "2022" = M22, "2023" = M23, "2024" = M24)
+for (ano in names(anos)) {
+  pie_p8_unico(anos[[ano]], anno_label = ano)
+  Sys.sleep(0.6)   
+}
+
+```
+
+```{r}
+# Actualizar títulos de gráficos para cuantitativas (boxplots e histogramas) usando nombres 
+cuantitativas <- c("p4","p24","p26")
+colores <- rainbow(6)
+
+for (v in cuantitativas) {
+  titulo <- ifelse(!is.na(var_labels[v]), var_labels[v], v)
+  par(mfrow = c(3,2), mar = c(4,4,2,1))
+  boxplot(M19[[v]], horizontal = TRUE, main = paste(titulo, "2019"), col = colores[1], ylim = c(0,100))
+  boxplot(M20[[v]], horizontal = TRUE, main = paste(titulo, "2020"), col = colores[2], ylim = c(0,100))
+  boxplot(M21[[v]], horizontal = TRUE, main = paste(titulo, "2021"), col = colores[3], ylim = c(0,100))
+  boxplot(M22[[v]], horizontal = TRUE, main = paste(titulo, "2022"), col = colores[4], ylim = c(0,100))
+  boxplot(M23[[v]], horizontal = TRUE, main = paste(titulo, "2023"), col = colores[5], ylim = c(0,100))
+  boxplot(M24[[v]], horizontal = TRUE, main = paste(titulo, "2024"), col = colores[6], ylim = c(0,100))
+}
+
+for (v in cuantitativas) {
+  titulo <- ifelse(!is.na(var_labels[v]), var_labels[v], v)
+  par(mfrow = c(2,3), mar = c(4,4,2,1))
+  hist(M19[[v]], col = colores[1], main = paste("Hist", titulo, "2019"), xlab = titulo)
+  hist(M20[[v]], col = colores[2], main = paste("Hist", titulo, "2020"), xlab = titulo)
+  hist(M21[[v]], col = colores[3], main = paste("Hist", titulo, "2021"), xlab = titulo)
+  hist(M22[[v]], col = colores[4], main = paste("Hist", titulo, "2022"), xlab = titulo)
+  hist(M23[[v]], col = colores[5], main = paste("Hist", titulo, "2023"), xlab = titulo)
+  hist(M24[[v]], col = colores[6], main = paste("Hist", titulo, "2024"), xlab = titulo)
+}
+
+```
+
+
+```{r}
+# Etiquetas legibles para las variables
+var_labels <- c(
+  p4  = "Nº libros leídos",
+  p24 = "Frecuencia de lectura digital",
+  p26 = "Tiempo continuo de lectura (minutos)"
+)
+
+cuantitativas <- c("p4", "p24", "p26")
+colores <- rainbow(6)
+
+for (v in cuantitativas) {
+  titulo <- ifelse(!is.na(var_labels[v]), var_labels[v], v)
+
+  dev.new(title = paste("Boxplots", v), width = 10, height = 7)
+  
+  par(mfrow = c(3,2), mar = c(5,5,3,2))  
+  
+  boxplot(M19[[v]], horizontal = TRUE, main = paste(titulo, "2019"),
+          col = colores[1], ylim = c(0,100), xlab = "Minutos de lectura", ylab = "Tiempo continuo de lectura")
+  boxplot(M20[[v]], horizontal = TRUE, main = paste(titulo, "2020"),
+          col = colores[2], ylim = c(0,100), xlab = "Minutos de lectura", ylab = "Tiempo continuo de lectura")
+  boxplot(M21[[v]], horizontal = TRUE, main = paste(titulo, "2021"),
+          col = colores[3], ylim = c(0,100), xlab = "Minutos de lectura", ylab = "Tiempo continuo de lectura")
+  boxplot(M22[[v]], horizontal = TRUE, main = paste(titulo, "2022"),
+          col = colores[4], ylim = c(0,100), xlab = "Minutos de lectura", ylab = "Tiempo continuo de lectura")
+  boxplot(M23[[v]], horizontal = TRUE, main = paste(titulo, "2023"),
+          col = colores[5], ylim = c(0,100), xlab = "Minutos de lectura", ylab = "Tiempo continuo de lectura")
+  boxplot(M24[[v]], horizontal = TRUE, main = paste(titulo, "2024"),
+          col = colores[6], ylim = c(0,100), xlab = "Minutos de lectura", ylab = "Tiempo continuo de lectura")
+}
+
+```
+
+
+```{r}
+# Instalar paquetes si es necesario
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2", repos = "https://cloud.r-project.org")
+library(ggplot2)
+
+# Lista de años y bases
+anos <- list("2019"=M19, "2020"=M20, "2021"=M21, "2022"=M22, "2023"=M23, "2024"=M24)
+
+# Extraer medias de p26 por año
+medias_p26 <- sapply(names(anos), function(yr) {
+  df <- anos[[yr]]
+  if (!"p26" %in% names(df)) return(NA)
+  x <- suppressWarnings(as.numeric(as.character(df$p26)))
+  if (all(is.na(x))) return(NA)
+  mean(x, na.rm = TRUE)
+})
+
+# Crear data.frame para graficar
+df_medias <- data.frame(
+  Año = as.integer(names(medias_p26)),
+  Media = round(medias_p26, 2)
+)
+
+# Graficar
+ggplot(df_medias, aes(x = Año, y = Media)) +
+  geom_line(color = "#2C3E50", linewidth = 1.2) +
+  geom_point(size = 3, color = "#E74C3C") +
+  geom_text(aes(label = Media), vjust = -1, size = 4, color = "black") +
+  labs(title = "Media de tiempo continuo de lectura (2019–2024)",
+       subtitle = "Variable: p26 — Tiempo continuo de lectura",
+       x = "Año", y = "Minutos de lectura",
+       caption = "Fuente: M19–M24") +
+  theme_minimal(base_size = 13) +
+  theme(plot.title = element_text(face = "bold"))
+
+```
+
+
+
